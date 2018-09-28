@@ -40,7 +40,7 @@ spec:
             docker login -u _json_key --password-stdin https://gcr.io < ${KEYFILE}
             docker build --build-arg VERSION=${env.TAG_NAME} -t gcr.io/redeo-all/${NAME}:${env.TAG_NAME} .
             docker tag gcr.io/redeo-all/${NAME}:${env.TAG_NAME} gcr.io/redeo-all/${NAME}:${scm.GIT_COMMIT}
-            docker push gcr.io/redeo-all/${NAME}:latest
+            docker push gcr.io/redeo-all/${NAME}:${env.TAG_NAME}
             """
           }
         }
