@@ -45,7 +45,7 @@ case $1 in
 		fi
 		echo JMX_INTERFACE $JMX_INTERFACE
 		
-		CREATE_BODY='{"jsonrpc":"2.0","method":"host.create","params":{"hostid":"'"$HOSTID"'","status":0,"templates":['"${TEMPLATE_IDS::-1}"'],"groups":['"${GROUP_IDS::-1}"'],"interfaces":[{"type":1,"main":1,"useip":1,"ip":"'"$HOSTIP"'","dns":"","port":"10050"}'"$JMX_INTERFACE"']},"auth":"'"$TOKEN"'","id":3}'
+		CREATE_BODY='{"jsonrpc":"2.0","method":"host.create","params":{"host":"'"$HOSTNAME"'","templates":['"${TEMPLATE_IDS::-1}"'],"groups":['"${GROUP_IDS::-1}"'],"interfaces":[{"type":1,"main":1,"useip":1,"ip":"'"$HOSTIP"'","dns":"","port":"10050"}'"$JMX_INTERFACE"']},"auth":"'"$TOKEN"'","id":3}'
 		echo CREATE_BODY $CREATE_BODY
 
 		curl -X POST -H 'Content-type:application/json' -d "$CREATE_BODY" -s -N "http://zabbix.bumeran.biz/api_jsonrpc.php"
