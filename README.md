@@ -1,9 +1,11 @@
 # docker-zabbix-agent
 
-![alt text](http://www.diegoluisi.eti.br/wp-content/uploads/2015/05/zabbix.png "Agente Zabbix") # Extension del agente zabbix
+![alt text](http://www.diegoluisi.eti.br/wp-content/uploads/2015/05/zabbix.png "Agente Zabbix") 
+# Extension del agente zabbix
+
+## En caso de modificarlo, generar un tag y publicarlo con http://172.18.140.27:30000/job/docker-zabbix-agent/
 
 Imagen de docker para ser usada en Kuberntes como sidecar container junto a la aplicacion a inspeccionar.
-
 
 + La imagen tiene un script escrito en bash __/etc/zabbix/zabbix_api.sh__ que recibe un parametro entre create, enable y disable.
 
