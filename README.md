@@ -1,9 +1,11 @@
 # docker-zabbix-agent
 
-![alt text](http://www.diegoluisi.eti.br/wp-content/uploads/2015/05/zabbix.png "Agente Zabbix") # Extension del agente zabbix
+![alt text](http://www.diegoluisi.eti.br/wp-content/uploads/2015/05/zabbix.png "Agente Zabbix") 
+# Extension del agente zabbix
 
 Imagen de docker para ser usada en Kuberntes como sidecar container junto a la aplicacion a inspeccionar.
 
+### En caso de modificarlo, generar un tag y publicarlo con http://172.18.140.27:30000/job/docker-zabbix-agent/
 
 + La imagen tiene un script escrito en bash __/etc/zabbix/zabbix_api.sh__ que recibe un parametro entre create, enable y disable.
 
@@ -27,14 +29,14 @@ Ejemplo de configuración de deploy en Kubernetes.
 - name: zabbix-agent
   image: "gcr.io/redeo-all/docker-zabbix-agent:1.0.3"
   lifecycle:
-	postStart:
-	  exec:
-	    command: 
-	    - "/etc/zabbix/zabbix_api.sh"
-	    - "create"
-	preStop:
-	  exec:
-	    command:
-	    - "/etc/zabbix/zabbix_api.sh"
-	    - "disable"
+    postStart:
+      exec:
+        command: 
+        - "/etc/zabbix/zabbix_api.sh"
+        - "create"
+    preStop:
+      exec:
+        command:
+        - "/etc/zabbix/zabbix_api.sh"
+        - "disable"
 ```
