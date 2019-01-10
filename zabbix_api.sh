@@ -57,6 +57,13 @@ function create_host() {
 	curl -X POST -H 'Content-type:application/json' -d "$CREATE_BODY" -s -N "https://zabbix.navent.com/api_jsonrpc.php"
 }
 
+function enable_host() {
+	UPDATE_BODY='{"jsonrpc":"2.0","method":"host.update","params":{"hostid":"'"$HOSTID"'","status":0},"auth":"'"$TOKEN"'","id":3}'
+	echo UPDATE_BODY $UPDATE_BODY
+
+	curl -X POST -H 'Content-type:application/json' -d "$UPDATE_BODY" -s -N "https://zabbix.navent.com/api_jsonrpc.php"
+}
+
 case $1 in
 	create)
 		create_host
@@ -73,13 +80,12 @@ case $1 in
 			echo UPDATE_IP_BODY $UPDATE_IP_BODY
 
 			curl -X POST -H 'Content-type:application/json' -d "$UPDATE_IP_BODY" -s -N "https://zabbix.navent.com/api_jsonrpc.php"
+
+			enable_host
 		fi
 		;;
 	enable)
-		UPDATE_BODY='{"jsonrpc":"2.0","method":"host.update","params":{"hostid":"'"$HOSTID"'","status":0},"auth":"'"$TOKEN"'","id":3}'
-		echo UPDATE_BODY $UPDATE_BODY
-
-		curl -X POST -H 'Content-type:application/json' -d "$UPDATE_BODY" -s -N "https://zabbix.navent.com/api_jsonrpc.php"
+		enable_host
 		;;
 	disable)
 		UPDATE_BODY='{"jsonrpc":"2.0","method":"host.update","params":{"hostid":"'"$HOSTID"'","status":1},"auth":"'"$TOKEN"'","id":3}'
