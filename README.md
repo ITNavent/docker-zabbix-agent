@@ -22,6 +22,10 @@ ZBX_JMXPORT es opcional y si esta definido crea en el host la interfaz JMX en el
 
 + Cuando se envia el parámetro __enable__ se vuelve a activar el host en zabbix.
 
++ Cuando se envia el parámetro __createOrUpdate__ opera en modo __create__ en caso de no existir en host en zabbix.
+
+Para cuando existe el host en zabbix se hace un update de las interfases actualizando la IP de las mismas. Esto es util para usarlo con Stateful Sets de K8.
+
 
 Ejemplo de configuración de deploy en Kubernetes.
 
