@@ -5,7 +5,14 @@
 
 Imagen de docker para ser usada en Kuberntes como sidecar container junto a la aplicacion a inspeccionar.
 
-### En caso de modificarlo, generar un tag y publicarlo con http://172.18.140.27:30000/job/docker-zabbix-agent/
+Para crear la imagen:
+
+docker build -t gcr.io/redeo-all/docker-zabbix-agent:${TAG_IMAGEN} -f Dockerfile .
+
+Luego subirla al repo:
+
+docker push gcr.io/redeo-all/docker-zabbix-agent:${TAG_IMAGEN}
+
 
 + La imagen tiene un script escrito en bash __/etc/zabbix/zabbix_api.sh__ que recibe un parametro entre create, enable y disable.
 
@@ -24,6 +31,8 @@ ZBX_JMXPORT es opcional y si esta definido crea en el host la interfaz JMX en el
 
 + Cuando se envia el parámetro __createOrUpdate__ opera en modo __create__ en caso de no existir en host en zabbix.
 
++ Cuando se envia un segundo ṕarametro además de disable / create / createOrUpdate setea el tiempo de timeout , antes de que realice la acción enviada en parametro 1
+
 Para cuando existe el host en zabbix se hace un update de las interfases actualizando la IP de las mismas. Esto es util para usarlo con Stateful Sets de K8.
 
 
@@ -38,6 +47,7 @@ Ejemplo de configuración de deploy en Kubernetes.
         command: 
         - "/etc/zabbix/zabbix_api.sh"
         - "create"
+        - "40" (opcional)
     preStop:
       exec:
         command:

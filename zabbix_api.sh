@@ -1,4 +1,13 @@
 #!/bin/bash
+echo "parametro $1 arranco script numero de parametros $#" >> tests.txt
+if [ -n "$2" ]; then
+	START_TIME=$SECONDS
+	echo "el parametro de sleep es $2" >> tests.txt
+	sleep $2
+	ELAPSED_TIME=$(($SECONDS - $START_TIME))
+        echo "termina el sleep $ELAPSED_TIME" >> tests.txt
+fi
+
 
 HOSTNAME=$(printf %s "$(hostname)")
 echo HOSTNAME $HOSTNAME
