@@ -2,6 +2,7 @@ FROM golang:1.10.0-alpine
 RUN apk add --no-cache git
 ENV GOPATH /go
 RUN go get -u github.com/googlecloudplatform/gcsfuse
+
 FROM zabbix/zabbix-agent:alpine-3.0-latest
 
 COPY --from=0 /go/bin/gcsfuse /usr/local/bin
@@ -45,3 +46,10 @@ RUN ["chmod", "+x", "/etc/zabbix/putInMantenimientoSinData.sh"]
 
 COPY mantenimientosindatacongrupo.py /etc/zabbix/mantenimientosindatacongrupo.py
 RUN ["chmod", "+x", "/etc/zabbix/mantenimientosindatacongrupo.py"]
+
+ARG SCUTTLE_VERSION=v1.3.1
+RUN echo ${SCUTTLE_VERSION}
+RUN curl -L https://github.com/redboxllc/scuttle/releases/download/${SCUTTLE_VERSION}/scuttle-linux-amd64.zip | jar xv
+RUN chmod +x scuttle
+
+ENTRYPOINT ["scuttle", "/sbin/tini", "--", "/usr/bin/docker-entrypoint.sh"]
