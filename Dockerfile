@@ -12,7 +12,6 @@ COPY --from=0 /go/bin/gcsfuse /usr/local/bin
 
 RUN apk add --no-cache ca-certificates fuse && rm -rf /tmp/*
 
-
 RUN apk add --no-cache curl jq bash
 
 RUN apk add --update \
@@ -58,4 +57,4 @@ RUN rm scuttle.zip
 RUN chmod +x scuttle
 
 USER 1997
-ENTRYPOINT ["scuttle", "/sbin/tini", "--", "/usr/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/var/lib/zabbix/scuttle", "/sbin/tini", "--", "/usr/bin/docker-entrypoint.sh"]
