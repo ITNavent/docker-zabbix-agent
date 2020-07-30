@@ -49,6 +49,9 @@ RUN ["chmod", "+x", "/etc/zabbix/putInMantenimientoSinData.sh"]
 COPY mantenimientosindatacongrupo.py /etc/zabbix/mantenimientosindatacongrupo.py
 RUN ["chmod", "+x", "/etc/zabbix/mantenimientosindatacongrupo.py"]
 
+COPY start_agent.sh /etc/zabbix/start_agent.sh
+RUN ["chmod", "+x", "/etc/zabbix/start_agent.sh"]
+
 ARG SCUTTLE_VERSION=v1.3.1
 RUN echo ${SCUTTLE_VERSION}
 RUN curl -o scuttle.zip -L https://github.com/redboxllc/scuttle/releases/download/${SCUTTLE_VERSION}/scuttle-linux-amd64.zip
@@ -57,4 +60,4 @@ RUN rm scuttle.zip
 RUN chmod +x scuttle
 
 USER 1997
-ENTRYPOINT ["/var/lib/zabbix/scuttle", "/sbin/tini", "--", "/usr/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/var/lib/zabbix/scuttle", "/sbin/tini", "--", "/etc/zabbix/start_agent.sh"]
