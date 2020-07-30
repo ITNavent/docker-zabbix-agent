@@ -4,12 +4,14 @@ ENV GOPATH /go
 RUN go get -u github.com/googlecloudplatform/gcsfuse
 
 FROM zabbix/zabbix-agent:alpine-3.0-latest
+LABEL maintainer="corerealestate@navent.com"
+
+USER root
 
 COPY --from=0 /go/bin/gcsfuse /usr/local/bin
 
 RUN apk add --no-cache ca-certificates fuse && rm -rf /tmp/*
 
-LABEL maintainer="corerealestate@navent.com"
 
 RUN apk add --no-cache curl jq bash
 
@@ -18,7 +20,8 @@ RUN apk add --update \
     python-dev \
     py-pip \
     which \
-    git
+    git \
+    unzip
 
 COPY zabbix_api.sh /etc/zabbix/zabbix_api.sh
 RUN ["chmod", "+x", "/etc/zabbix/zabbix_api.sh"]
@@ -49,7 +52,10 @@ RUN ["chmod", "+x", "/etc/zabbix/mantenimientosindatacongrupo.py"]
 
 ARG SCUTTLE_VERSION=v1.3.1
 RUN echo ${SCUTTLE_VERSION}
-RUN curl -L https://github.com/redboxllc/scuttle/releases/download/${SCUTTLE_VERSION}/scuttle-linux-amd64.zip | jar xv
+RUN curl -o scuttle.zip -L https://github.com/redboxllc/scuttle/releases/download/${SCUTTLE_VERSION}/scuttle-linux-amd64.zip
+RUN unzip scuttle.zip
+RUN rm scuttle.zip
 RUN chmod +x scuttle
 
+USER 1997
 ENTRYPOINT ["scuttle", "/sbin/tini", "--", "/usr/bin/docker-entrypoint.sh"]
