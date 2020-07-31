@@ -3,7 +3,7 @@ RUN apk add --no-cache git
 ENV GOPATH /go
 RUN go get -u github.com/googlecloudplatform/gcsfuse
 
-FROM zabbix/zabbix-agent:alpine-3.0-latest
+FROM zabbix/zabbix-agent:alpine-4.2.8
 LABEL maintainer="corerealestate@navent.com"
 
 USER root
@@ -52,12 +52,15 @@ RUN ["chmod", "+x", "/etc/zabbix/mantenimientosindatacongrupo.py"]
 COPY start_agent.sh /etc/zabbix/start_agent.sh
 RUN ["chmod", "+x", "/etc/zabbix/start_agent.sh"]
 
-ARG SCUTTLE_VERSION=v1.3.1
-RUN echo ${SCUTTLE_VERSION}
-RUN curl -o scuttle.zip -L https://github.com/redboxllc/scuttle/releases/download/${SCUTTLE_VERSION}/scuttle-linux-amd64.zip
-RUN unzip scuttle.zip
-RUN rm scuttle.zip
-RUN chmod +x scuttle
+#ARG SCUTTLE_VERSION=v1.3.1
+#RUN echo ${SCUTTLE_VERSION}
+#RUN curl -o scuttle.zip -L https://github.com/redboxllc/scuttle/releases/download/${SCUTTLE_VERSION}/scuttle-linux-amd64.zip
+#RUN unzip scuttle.zip
+#RUN rm scuttle.zip
+#RUN chmod +x scuttle
 
-USER 1997
-ENTRYPOINT ["/var/lib/zabbix/scuttle", "/sbin/tini", "--", "/etc/zabbix/start_agent.sh"]
+ENTRYPOINT ["/etc/zabbix/start_agent.sh"]
+
+USER zabbix
+
+CMD ["/usr/sbin/zabbix_agentd", "--foreground", "-c", "/etc/zabbix/zabbix_agentd.conf"]

@@ -1,10 +1,11 @@
 #!/bin/bash
 
+set -x
+
+set /sbin/tini -- /usr/bin/docker-entrypoint.sh "$@"
+
 /etc/zabbix/zabbix_api.sh createOrUpdate
 status=$?
-if [ $status -ne 0 ]; then
-  echo "Failed prestart: $status"
-  exit $status
-fi
+echo "Prestart status: $status"
 
-/usr/bin/docker-entrypoint.sh
+exec "$@"
