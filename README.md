@@ -42,12 +42,6 @@ Ejemplo de configuración de deploy en Kubernetes.
 - name: zabbix-agent
   image: "gcr.io/redeo-all/docker-zabbix-agent:1.0.3"
   lifecycle:
-    postStart:
-      exec:
-        command: 
-        - "/etc/zabbix/zabbix_api.sh"
-        - "create"
-        - "40" (opcional)
     preStop:
       exec:
         command:
