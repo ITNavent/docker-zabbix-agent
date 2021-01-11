@@ -15,7 +15,7 @@ echo HOSTNAME $HOSTNAME
 HOSTIP=$(printf %s "$(hostname -i)")
 echo HOSTIP $HOSTIP
 
-LOGIN_BODY='{"jsonrpc":"2.0","method":"user.login","params":{ "user":"deploy_bot","password":"deploy"},"auth":null,"id":0}'
+LOGIN_BODY='{"jsonrpc":"2.0","method":"user.login","params":{ "user":"deploy_bot","password":"Deploy2020!"},"auth":null,"id":0}'
 echo $LOGIN_BODY
 TOKEN=$(curl -X POST -H 'Content-type:application/json' -d "$LOGIN_BODY" \
 -s -N "https://zabbix.navent.com/api_jsonrpc.php" | jq -r '.result')
