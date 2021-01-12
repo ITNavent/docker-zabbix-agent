@@ -6,8 +6,8 @@ import time
 import json
 import sys
 
-user = "deploy_bot"
-password = "deploy"
+user = "deploy_bot2"
+password = "Deploy2020!"
 server = "zabbix.navent.com"
 #api = "http://" + server + "/zabbix/api_jsonrpc.php"
 api = "https://" + server + "/api_jsonrpc.php"
